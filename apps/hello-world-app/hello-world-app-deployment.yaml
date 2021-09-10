@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-deployment
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-web-server
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: hello-world-web-server
+    spec:
+      volumes:
+        - name: hello-world-volume
+          persistentVolumeClaim:
+            claimName: hello-world-pvc
+      containers:
+      - name: hello-world-web-server
+        image: nginx:1.21.1
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: "/usr/share/nginx/html"
+            name: hello-world-volume
