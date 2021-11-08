@@ -1,0 +1,46 @@
+# k3d configuration file, saved as e.g. /home/me/myk3dcluster.yaml
+apiVersion: k3d.io/v1alpha3 # this will change in the future as we make everything more stable
+kind: Simple 
+name: hello-world-test 
+servers: 1
+agents: 0
+kubeAPI: 
+  hostIP: "37.120.174.11" # where the Kubernetes API will be listening on
+  hostPort: "6443" # whre the Kubernetes API listening port will be mapped to on your host system
+network: host
+volumes: # repeatable flags are represented as YAML lists
+  - volume: /var/www/k3dvolume/:/usr/share/k3dvolume/
+    nodeFilters:
+      - server:*
+      - agent:*
+  - volume: /var/www/private_kubernetes_cluster/base/helm/helm-ingress-nginx.yaml:/var/lib/rancher/k3s/server/manifests/helm-ingress-nginx.yaml 
+    nodeFilters:
+      - server:*
+      - agent:*
+ports:
+  - port: 80:80
+    nodeFilters:
+      - server:0:direct
+  - port: 443:443
+    nodeFilters:
+      - server:0:direct
+  - port: 8089:8089
+    nodeFilters:
+      - server:0:direct
+options:
+  k3d: # k3d runtime settings
+    wait: true # wait for cluster to be usable before returining; same as `--wait` (default: true)
+    timeout: "60s" # wait timeout before aborting; same as `--timeout 60s`
+    disableLoadbalancer: true
+  k3s: # options passed on to K3s itself
+    extraArgs: # additional arguments passed to the `k3s server|agent` command; same as `--k3s-arg`
+      - arg: --tls-san=37.120.174.11
+        nodeFilters:
+          - server:*
+      - arg: --advertise-address=37.120.174.11
+        nodeFilters:
+          - server:*
+  kubeconfig:
+    updateDefaultKubeconfig: true # add new cluster to your default Kubeconfig; same as `--kubeconfig-update-default` (default: true)
+    switchCurrentContext: true # also set current-context to the new cluster's context; same as `--kubeconfig-switch-context` (default: true)
+

@@ -9,3 +9,6 @@ resources:
   - apps/hello-world-app/hello-world-app-deployment.yaml
   - apps/hello-world-app/hello-world-app-nodeport.yaml
   - apps/hello-world-app/hello-world-app-pv.yaml
+
+  - apps/http-echo/http-echo-deployment.yaml
+  - apps/http-echo/http-echo-nodeport.yaml
