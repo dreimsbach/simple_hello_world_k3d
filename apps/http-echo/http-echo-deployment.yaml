@@ -16,4 +16,4 @@ spec:
       - name: http-echo
         image:  mendhak/http-https-echo:21
         ports:
-        - containerPort: 80
+        - containerPort: 8080

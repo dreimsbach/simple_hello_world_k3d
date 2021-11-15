@@ -10,13 +10,17 @@ echo "<html><head></head><body><h1>Local HTML File Hello World<h1></body></html>
 
 # Create k3d Cluster with NGINX as Ingress and mount local folder als Volume
 k3d cluster create hello-world-test \
-  --port 80:80@server:0:direct  \
-  --port 443:443@server:0:direct  \
+  --no-lb  \
   --servers 1  \
   --volume "$localVolumePath:/usr/share/k3dvolume/" \
   --volume "$(pwd)/base/helm/helm-ingress-nginx.yaml:/var/lib/rancher/k3s/server/manifests/helm-ingress-nginx.yaml" \
-  --k3s-arg '--disable=traefik@server:*' \
-  --servers-memory=2g --no-lb
+  --k3s-arg '--no-deploy=traefik@server:*' \
+  --servers-memory=2g \
+  --network host \
+  --api-port 37.120.174.11:6443 \
+  --k3s-arg '--advertise-address=37.120.174.11@server:*' \
+  --k3s-arg '--tls-san=37.120.174.11@server:*'
+
 
 #Kustomize apply
 kubectl apply -k .
