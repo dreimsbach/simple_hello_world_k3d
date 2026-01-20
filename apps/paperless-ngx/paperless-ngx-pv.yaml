@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/usr/share/k3dvolume/paperless-ngx"
+    path: "/usr/share/k3dvolume/paperless/paperless-ngx"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -23,3 +23,55 @@ spec:
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: paperless-ngx-media-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/usr/share/k3dvolume/paperless/paperless-ngx-media"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-ngx-media-pvc
+spec:
+  storageClassName: manual
+  volumeName: paperless-ngx-media-pv
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: paperless-ngx-consume-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/usr/share/k3dvolume/paperless/paperless-ngx-consume"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-ngx-consume-pvc
+spec:
+  storageClassName: manual
+  volumeName: paperless-ngx-consume-pv
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi

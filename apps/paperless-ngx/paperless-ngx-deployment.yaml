@@ -16,6 +16,12 @@ spec:
         - name: paperless-ngx-data
           persistentVolumeClaim:
             claimName: paperless-ngx-pvc
+        - name: paperless-ngx-media
+          persistentVolumeClaim:
+            claimName: paperless-ngx-media-pvc
+        - name: paperless-ngx-consume
+          persistentVolumeClaim:
+            claimName: paperless-ngx-consume-pvc
       containers:
       - name: paperless-ngx
         image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -50,3 +56,7 @@ spec:
         volumeMounts:
           - mountPath: "/usr/src/paperless/data"
             name: paperless-ngx-data
+          - mountPath: "/usr/src/paperless/media"
+            name: paperless-ngx-media
+          - mountPath: "/usr/src/paperless/consume"
+            name: paperless-ngx-consume

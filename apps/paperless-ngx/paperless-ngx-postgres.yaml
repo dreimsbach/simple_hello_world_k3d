@@ -5,11 +5,11 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 2Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/usr/share/k3dvolume/paperless-ngx-postgres"
+    path: "/usr/share/k3dvolume/paperless/paperless-ngx-postgres"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,7 +22,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
+      storage: 5Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
