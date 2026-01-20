@@ -9,16 +9,16 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: "/"
+        path: "/test"
         backend:
           service:
             name: hello-world-nodeport
             port:
               number: 80
       - pathType: Prefix
-        path: "/paperless"
+        path: "/"
         backend:
           service:
             name: paperless-ngx
             port:
-              number: 8000
+              number: 80
