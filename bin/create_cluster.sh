@@ -1,12 +1,14 @@
 
 #Local Base Folder from GIT resources
-localVolumePath=$(pwd)/../k3dvolume
+script_dir=$(cd "$(dirname "$0")" && pwd)
+repo_root=$(cd "$script_dir/.." && pwd)
+localVolumePath="$repo_root/k3dvolume"
 
 # Create Folder if not exists
-mkdir -p $localVolumePath/hello-world
+mkdir -p "$localVolumePath/hello-world"
 
 # add index html file local
-echo "<html><head></head><body><h1>Local HTML File Heelo World<h1></body></html>" > $localVolumePath/hello-world/index.html
+echo "<html><head></head><body><h1>Local HTML File Hello World</h1></body></html>" > "$localVolumePath/hello-world/index.html"
 
 # Create k3d Cluster with NGINX as Ingress and mount local folder als Volume
 #k3d cluster create hello-world-test \
@@ -19,7 +21,7 @@ echo "<html><head></head><body><h1>Local HTML File Heelo World<h1></body></html>
 #  --k3s-server-arg '--no-deploy=traefik' \
 #  --servers-memory=2g
 
-k3d cluster create hello-word-test \
+k3d cluster create hello-world-test \
   --port 8089:8089@loadbalancer  \
   --port 80:80@loadbalancer  \
   --port 443:443@loadbalancer  \
@@ -27,7 +29,7 @@ k3d cluster create hello-word-test \
   --volume "$localVolumePath:/usr/share/k3dvolume/" \
   --volume "$(pwd)/base/helm/helm-ingress-nginx.yaml:/var/lib/rancher/k3s/server/manifests/helm-ingress-nginx.yaml" \
   --k3s-arg "--disable=traefik@server:*" \
-  --servers-memory=2g \
+  --servers-memory=2g
 
 #Kustomize apply
-kubectl apply -k .
+kubectl apply -k "$repo_root"
