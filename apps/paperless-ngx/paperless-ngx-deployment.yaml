@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx
+spec:
+  selector:
+    matchLabels:
+      app: paperless-ngx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: paperless-ngx
+    spec:
+      volumes:
+        - name: paperless-ngx-data
+          persistentVolumeClaim:
+            claimName: paperless-ngx-pvc
+      containers:
+      - name: paperless-ngx
+        image: ghcr.io/paperless-ngx/paperless-ngx:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: PAPERLESS_REDIS
+          value: "redis://paperless-ngx-redis:6379"
+        - name: PAPERLESS_DBENGINE
+          value: "postgres"
+        - name: PAPERLESS_DBHOST
+          value: "paperless-ngx-postgres"
+        - name: PAPERLESS_DBPORT
+          value: "5432"
+        - name: PAPERLESS_DBNAME
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-postgres-secret
+              key: POSTGRES_DB
+        - name: PAPERLESS_DBUSER
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-postgres-secret
+              key: POSTGRES_USER
+        - name: PAPERLESS_DBPASS
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-postgres-secret
+              key: POSTGRES_PASSWORD
+        - name: PAPERLESS_BIND_ADDR
+          value: "0.0.0.0"
+        volumeMounts:
+          - mountPath: "/usr/src/paperless/data"
+            name: paperless-ngx-data

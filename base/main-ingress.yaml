@@ -15,3 +15,10 @@ spec:
             name: hello-world-nodeport
             port:
               number: 80
+      - pathType: Prefix
+        path: "/paperless"
+        backend:
+          service:
+            name: paperless-ngx
+            port:
+              number: 8000

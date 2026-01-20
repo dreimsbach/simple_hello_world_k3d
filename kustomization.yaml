@@ -9,3 +9,8 @@ resources:
   - apps/hello-world-app/hello-world-app-deployment.yaml
   - apps/hello-world-app/hello-world-app-nodeport.yaml
   - apps/hello-world-app/hello-world-app-pv.yaml
+  - apps/paperless-ngx/paperless-ngx-deployment.yaml
+  - apps/paperless-ngx/paperless-ngx-service.yaml
+  - apps/paperless-ngx/paperless-ngx-redis.yaml
+  - apps/paperless-ngx/paperless-ngx-pv.yaml
+  - apps/paperless-ngx/paperless-ngx-postgres.yaml
