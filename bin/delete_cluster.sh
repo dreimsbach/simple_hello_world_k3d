@@ -1,1 +1,1 @@
-k3d cluster delete hello-word-test
+k3d cluster delete hello-world-test
