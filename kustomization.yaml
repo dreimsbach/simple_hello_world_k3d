@@ -13,6 +13,7 @@ resources:
   - apps/immich-app/immich-postgres.yaml
   - apps/immich-app/immich-redis.yaml
   - apps/immich-app/immich-server.yaml
+  - apps/immich-app/immich-machine-learning.yaml
   - apps/photoprism/photoprism-app-deployment.yaml
   - apps/photoprism/photoprism-db-deployment.yaml
   - apps/photoprism/photoprism-app-service.yaml
