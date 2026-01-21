@@ -22,3 +22,10 @@ spec:
                 name: hello-world-nodeport
                 port:
                   number: 80
+          - pathType: Prefix
+            path: "/pp"
+            backend:
+              service:
+                name: photoprism-server
+                port:
+                  number: 80

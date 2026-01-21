@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: photoprism-db
+  labels:
+    app: photoprism
+spec:
+  selector:
+    pod-label: photoprism-db-pod
+  ports:
+  - protocol: TCP
+    port: 3306

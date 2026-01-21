@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photoprism
+spec:
+  selector:
+    matchLabels:
+      app: photoprism
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: photoprism
+    spec:
+      containers:
+      - name: photoprism
+        image: photoprism/photoprism:251130
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "1Gi"
+          limits:
+            memory: "2Gi"
+        env:
+        - name: PHOTOPRISM_ADMIN_PASSWORD
+          value: "safek5629SSSSSDf"
+        - name: PHOTOPRISM_DEBUG
+          value: "true"
+        - name: PHOTOPRISM_STORAGE_PATH
+          value: /assets/storage
+        - name: PHOTOPRISM_CACHE_PATH
+          value: /assets/cache
+        - name: PHOTOPRISM_IMPORT_PATH
+          value: /assets/photos/import
+        - name: PHOTOPRISM_EXPORT_PATH
+          value: /assets/photos/export
+        - name: PHOTOPRISM_ORIGINALS_PATH
+          value: /assets/photos/originals
+        - name: PHOTOPRISM_HTTP_HOST
+          value: 0.0.0.0
+        - name: PHOTOPRISM_HTTP_PORT
+          value: "80"
+        - name: PHOTOPRISM_DATABASE_DRIVER
+          value: "mysql"
+        - name: PHOTOPRISM_DATABASE_SERVER
+          value: "photoprism-db"
+        - name: PHOTOPRISM_DATABASE_NAME
+          value: "photoprism"
+        - name: PHOTOPRISM_DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: photoprism-db-secret
+              key: MYSQL_USER
+        - name: PHOTOPRISM_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: photoprism-db-secret
+              key: MYSQL_PASSWORD
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - mountPath: /assets/photos/originals
+          name: photoprism-storage
+          subPath: media/photos
+        - mountPath: /assets/cache
+          name: photoprism-storage
+          subPath: cache
+        - mountPath: /assets/photos/import
+          name: photoprism-storage
+          subPath: import
+        - mountPath: /assets/photos/export
+          name: photoprism-storage
+          subPath: export
+        - mountPath: /assets/storage
+          name: photoprism-storage
+          subPath: storage
+      volumes:
+      - name: photoprism-storage
+        persistentVolumeClaim:
+          claimName: photoprism-pvc
