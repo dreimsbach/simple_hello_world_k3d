@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 1Ti
+    storage: 200Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -23,7 +23,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Ti
+      storage: 200Gi
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -32,7 +32,7 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 1Ti
+    storage: 200Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -50,4 +50,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Ti
+      storage: 200Gi
