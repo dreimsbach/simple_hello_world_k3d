@@ -5,13 +5,20 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
- rules:
-  - http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: hello-world-nodeport
-            port:
-              number: 80
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: immich-server
+                port:
+                  number: 2283
+          - pathType: Prefix
+            path: "/helloworld"
+            backend:
+              service:
+                name: hello-world-nodeport
+                port:
+                  number: 80

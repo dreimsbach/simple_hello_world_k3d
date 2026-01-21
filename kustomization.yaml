@@ -9,3 +9,15 @@ resources:
   - apps/hello-world-app/hello-world-app-deployment.yaml
   - apps/hello-world-app/hello-world-app-nodeport.yaml
   - apps/hello-world-app/hello-world-app-pv.yaml
+  - apps/immich-app/immich-pv.yaml
+  - apps/immich-app/immich-postgres.yaml
+  - apps/immich-app/immich-redis.yaml
+  - apps/immich-app/immich-server.yaml
+
+secretGenerator:
+  - name: immich-db-secret
+    envs:
+      - secrets/immich.env
+
+generatorOptions:
+  disableNameSuffixHash: true
