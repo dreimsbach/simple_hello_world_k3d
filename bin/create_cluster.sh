@@ -16,11 +16,7 @@ k3d cluster create hello-world-test \
   --servers 1  \
   --volume "$localVolumePath:/usr/share/k3dvolume/" \
   --volume "$(pwd)/base/helm/helm-ingress-nginx.yaml:/var/lib/rancher/k3s/server/manifests/helm-ingress-nginx.yaml" \
-<<<<<<< HEAD
   --k3s-arg '--disable=traefik@server:*' \
-=======
-  --k3s-arg "--disable=traefik@server:*" \
->>>>>>> 21d157a (Update)
   --servers-memory=2g
 
 #Kustomize apply
