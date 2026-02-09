@@ -5,8 +5,3 @@ resources:
   #Base
   - base/main-ingress.yaml
   - base/rancher.yaml
-
-  # Apps
-  - apps/hello-world-app/hello-world-app-deployment.yaml
-  - apps/hello-world-app/hello-world-app-nodeport.yaml
-  - apps/hello-world-app/hello-world-app-pv.yaml

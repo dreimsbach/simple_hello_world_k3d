@@ -8,7 +8,6 @@ clusterName="hello-world-test"
 localVolumePath="$(pwd)/k3dvolume"
 
 # Create folders if not exists
-mkdir -p "$localVolumePath/hello-world"
 mkdir -p "$localVolumePath/rancher"
 
 # Keep Rancher login deterministic across rebuilds.
@@ -16,9 +15,6 @@ mkdir -p "$localVolumePath/rancher"
 if [ "${RESET_RANCHER_DATA:-true}" = "true" ]; then
   rm -rf "$localVolumePath/rancher/"*
 fi
-
-# add index html file local
-echo "<html><head></head><body><h1>Local HTML File Hello World<h1></body></html>" > "$localVolumePath/hello-world/index.html"
 
 # Create k3d Cluster with NGINX as Ingress and mount local folder als Volume
 k3d cluster create "$clusterName" \
