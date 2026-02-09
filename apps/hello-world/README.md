@@ -5,8 +5,12 @@ Deploy as Rancher user `dreimsbach` in namespace `playground`:
 ```bash
 ./bin/deploy_hello_world_dreimsbach.sh deploy
 ./bin/deploy_hello_world_dreimsbach.sh status
-kubectl -n playground port-forward svc/hello-world 8088:80  # open http://localhost:8088
 ```
+
+Ingress URL is generated from the current git branch:
+
+- `<branch>-hello-world.localhost`
+- Example for branch `rancher`: `http://rancher-hello-world.localhost`
 
 Cleanup:
 
