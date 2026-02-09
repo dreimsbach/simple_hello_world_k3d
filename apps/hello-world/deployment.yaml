@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-dreimsbach
+  name: hello-world
   namespace: playground
   labels:
-    app: hello-world-dreimsbach
+    app: hello-world
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-world-dreimsbach
+      app: hello-world
   template:
     metadata:
       labels:
-        app: hello-world-dreimsbach
+        app: hello-world
     spec:
       containers:
         - name: web
@@ -29,9 +29,9 @@ spec:
             - |
               cat > /usr/share/nginx/html/index.html <<'HTML'
               <html>
-                <head><title>Hello dreimsbach</title></head>
+                <head><title>Hello World</title></head>
                 <body>
-                  <h1>Hello World from dreimsbach</h1>
+                  <h1>Hello World</h1>
                   <p>Deployed as Deployment in namespace playground.</p>
                 </body>
               </html>
@@ -41,11 +41,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-dreimsbach
+  name: hello-world
   namespace: playground
 spec:
   selector:
-    app: hello-world-dreimsbach
+    app: hello-world
   ports:
     - name: http
       port: 80

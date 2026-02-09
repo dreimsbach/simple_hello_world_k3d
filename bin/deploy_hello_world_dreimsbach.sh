@@ -3,10 +3,10 @@ set -euo pipefail
 
 ACTION="${1:-deploy}"
 
-MANIFEST_PATH="${MANIFEST_PATH:-apps/hello-world-dreimsbach/deployment.yaml}"
+MANIFEST_PATH="${MANIFEST_PATH:-apps/hello-world/deployment.yaml}"
 NAMESPACE="${NAMESPACE:-playground}"
-DEPLOYMENT_NAME="${DEPLOYMENT_NAME:-hello-world-dreimsbach}"
-APP_LABEL="${APP_LABEL:-hello-world-dreimsbach}"
+DEPLOYMENT_NAME="${DEPLOYMENT_NAME:-hello-world}"
+APP_LABEL="${APP_LABEL:-hello-world}"
 AS_USER="${AS_USER:-dreimsbach}"
 WAIT_TIMEOUT="${WAIT_TIMEOUT:-120s}"
 
