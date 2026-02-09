@@ -2,19 +2,18 @@ stages:
   - deploy
 
 variables:
-  MANIFEST_PATH: apps/hello-world/deployment.yaml
+  APP_NAME: hello-world
+  MANIFEST_TEMPLATE: apps/hello-world/deployment.yaml
   NAMESPACE: playground
-  DEPLOYMENT_NAME: hello-world
-  APP_LABEL: hello-world
 
 deploy_hello_world:
   stage: deploy
   image: bitnami/kubectl:1.32
   rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH'
   before_script:
     - test -n "$KUBE_CONFIG_B64"
     - echo "$KUBE_CONFIG_B64" | base64 -d > kubeconfig
     - export KUBECONFIG="$CI_PROJECT_DIR/kubeconfig"
   script:
-    - ./bin/deploy_hello_world.sh deploy
+    - ./bin/deploy_app.sh deploy "$APP_NAME" "$NAMESPACE"

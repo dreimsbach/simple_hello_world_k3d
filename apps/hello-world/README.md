@@ -3,26 +3,31 @@
 Deploy in namespace `playground`:
 
 ```bash
-./bin/deploy_hello_world.sh deploy
-./bin/deploy_hello_world.sh status
+./bin/deploy_app.sh deploy hello-world playground
+./bin/deploy_app.sh status hello-world playground
 ```
 
 Ingress URL is generated from the current git branch:
 
-- `<branch>-hello-world.localhost`
+- `<branch>-<app>.localhost`
 - Example for branch `rancher`: `http://rancher-hello-world.localhost`
 
 Cleanup:
 
 ```bash
-./bin/deploy_hello_world.sh delete
+./bin/deploy_app.sh delete hello-world playground
 ```
 
 Force new rollout:
 
 ```bash
-./bin/deploy_hello_world.sh redeploy
+./bin/deploy_app.sh redeploy hello-world playground
 ```
+
+Optional variables:
+
+- `MANIFEST_TEMPLATE` (default: `apps/$APP_NAME/deployment.yaml`)
+- `HOST_DOMAIN` (default: `localhost`)
 
 ## GitLab CI/CD
 

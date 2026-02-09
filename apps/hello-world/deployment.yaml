@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world
-  namespace: playground
+  name: __APP_INSTANCE__
+  namespace: __NAMESPACE__
   labels:
-    app: hello-world
+    app: __APP_INSTANCE__
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-world
+      app: __APP_INSTANCE__
   template:
     metadata:
       labels:
-        app: hello-world
+        app: __APP_INSTANCE__
     spec:
       containers:
         - name: web
@@ -29,10 +29,11 @@ spec:
             - |
               cat > /usr/share/nginx/html/index.html <<'HTML'
               <html>
-                <head><title>Hello World</title></head>
+                <head><title>__APP_NAME__ (__BRANCH_SLUG__)</title></head>
                 <body>
-                  <h1>Hello World</h1>
-                  <p>Deployed as Deployment in namespace playground.</p>
+                  <h1>__APP_NAME__</h1>
+                  <p>Branch: __BRANCH_SLUG__</p>
+                  <p>Namespace: __NAMESPACE__</p>
                 </body>
               </html>
               HTML
@@ -41,11 +42,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world
-  namespace: playground
+  name: __APP_INSTANCE__
+  namespace: __NAMESPACE__
 spec:
   selector:
-    app: hello-world
+    app: __APP_INSTANCE__
   ports:
     - name: http
       port: 80
