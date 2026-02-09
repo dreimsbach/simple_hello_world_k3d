@@ -1,0 +1,46 @@
+# Apply AFTER Rancher is running (CRDs from management.cattle.io must exist).
+# Defaults: clusterName=local, user password=changeme. Adjust as needed.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: playground
+  annotations:
+    field.cattle.io/projectId: "local:playground"
+---
+apiVersion: management.cattle.io/v3
+kind: Project
+metadata:
+  name: playground
+  namespace: local
+spec:
+  displayName: playground
+  clusterName: local
+---
+apiVersion: management.cattle.io/v3
+kind: User
+metadata:
+  name: dreimsbach
+username: dreimsbach
+password: "changeme"
+displayName: dreimsbach
+enabled: true
+mustChangePassword: false
+---
+apiVersion: management.cattle.io/v3
+kind: ProjectRoleTemplateBinding
+metadata:
+  name: dreimsbach-playground-member
+  namespace: local
+projectName: local:playground
+roleTemplateName: project-member
+userPrincipalName: local://dreimsbach
+userName: dreimsbach
+---
+apiVersion: management.cattle.io/v3
+kind: GlobalRoleBinding
+metadata:
+  name: dreimsbach-user
+globalRoleName: user
+userPrincipalName: local://dreimsbach
+userName: dreimsbach

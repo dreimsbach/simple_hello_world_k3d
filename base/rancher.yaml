@@ -47,9 +47,16 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
+          volumeMounts:
+            - name: rancher-data
+              mountPath: /var/lib/rancher
           env:
             - name: CATTLE_BOOTSTRAP_PASSWORD
               value: "changeme"
+      volumes:
+        - name: rancher-data
+          persistentVolumeClaim:
+            claimName: rancher-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -66,6 +73,33 @@ spec:
     - name: https
       port: 443
       targetPort: https
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rancher-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/usr/share/k3dvolume/rancher"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rancher-pvc
+  namespace: cattle-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: manual
+  volumeName: rancher-pv
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
