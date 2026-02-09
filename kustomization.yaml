@@ -3,5 +3,4 @@ kind: Kustomization
  
 resources:
   #Base
-  - base/main-ingress.yaml
   - base/rancher.yaml
