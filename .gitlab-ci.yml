@@ -1,0 +1,21 @@
+stages:
+  - deploy
+
+variables:
+  MANIFEST_PATH: apps/hello-world-dreimsbach/deployment.yaml
+  NAMESPACE: playground
+  DEPLOYMENT_NAME: hello-world-dreimsbach
+  APP_LABEL: hello-world-dreimsbach
+  AS_USER: dreimsbach
+
+deploy_hello_world:
+  stage: deploy
+  image: bitnami/kubectl:1.32
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  before_script:
+    - test -n "$KUBE_CONFIG_B64"
+    - echo "$KUBE_CONFIG_B64" | base64 -d > kubeconfig
+    - export KUBECONFIG="$CI_PROJECT_DIR/kubeconfig"
+  script:
+    - ./bin/deploy_hello_world_dreimsbach.sh deploy

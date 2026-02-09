@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-dreimsbach
+  namespace: playground
+  labels:
+    app: hello-world-dreimsbach
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-dreimsbach
+  template:
+    metadata:
+      labels:
+        app: hello-world-dreimsbach
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          env:
+            - name: NGINX_ENTRYPOINT_QUIET_LOGS
+              value: "1"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              cat > /usr/share/nginx/html/index.html <<'HTML'
+              <html>
+                <head><title>Hello dreimsbach</title></head>
+                <body>
+                  <h1>Hello World from dreimsbach</h1>
+                  <p>Deployed as Deployment in namespace playground.</p>
+                </body>
+              </html>
+              HTML
+              nginx -g 'daemon off;'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-dreimsbach
+  namespace: playground
+spec:
+  selector:
+    app: hello-world-dreimsbach
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
