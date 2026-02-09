@@ -7,7 +7,7 @@ MANIFEST_PATH="${MANIFEST_PATH:-apps/hello-world/deployment.yaml}"
 NAMESPACE="${NAMESPACE:-playground}"
 DEPLOYMENT_NAME="${DEPLOYMENT_NAME:-hello-world}"
 APP_LABEL="${APP_LABEL:-hello-world}"
-AS_USER="${AS_USER:-dreimsbach}"
+AS_USER="${AS_USER:-}"
 WAIT_TIMEOUT="${WAIT_TIMEOUT:-120s}"
 INGRESS_NAME="${INGRESS_NAME:-${DEPLOYMENT_NAME}-ingress}"
 INGRESS_CLASS="${INGRESS_CLASS:-nginx}"
@@ -80,8 +80,6 @@ delete_branch_ingress() {
 }
 
 deploy() {
-  # Remove legacy pod from the previous standalone Pod setup.
-  run_kubectl -n "$NAMESPACE" delete pod "$DEPLOYMENT_NAME" --ignore-not-found=true >/dev/null 2>&1 || true
   run_kubectl apply -f "$MANIFEST_PATH"
   apply_branch_ingress
   run_kubectl -n "$NAMESPACE" rollout status "deployment/$DEPLOYMENT_NAME" --timeout="$WAIT_TIMEOUT"

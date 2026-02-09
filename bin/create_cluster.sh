@@ -43,3 +43,4 @@ done
 
 kubectl get namespace local >/dev/null
 kubectl apply -f base/rancher-access.yaml
+kubectl apply -f base/gitlab-deployer-rbac.yaml
