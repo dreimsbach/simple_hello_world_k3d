@@ -1,5 +1,5 @@
 # Apply AFTER Rancher is running (CRDs from management.cattle.io must exist).
-# Defaults: clusterName=local, user password=changeme. Adjust as needed.
+# Defaults: clusterName=local, user password is "changeme" (stored as bcrypt hash below). Adjust as needed.
 ---
 apiVersion: v1
 kind: Namespace
@@ -22,7 +22,7 @@ kind: User
 metadata:
   name: dreimsbach
 username: dreimsbach
-password: "changeme"
+password: "$2y$10$qyhoOSpID2KYf8R4Xvych.tus99FDLeMMolJ5HyR/nBSiV2bpOYKS"
 displayName: dreimsbach
 enabled: true
 mustChangePassword: false
