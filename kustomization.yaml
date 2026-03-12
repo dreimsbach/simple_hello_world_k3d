@@ -9,3 +9,14 @@ resources:
   - apps/hello-world-app/hello-world-app-deployment.yaml
   - apps/hello-world-app/hello-world-app-nodeport.yaml
   - apps/hello-world-app/hello-world-app-pv.yaml
+  - apps/n8n/n8n-deployment.yaml
+  - apps/n8n/n8n-nodeport.yaml
+  - apps/n8n/n8n-pv.yaml
+  - apps/n8n/postgres-deployment.yaml
+  - apps/n8n/postgres-service.yaml
+  - apps/n8n/postgres-pv.yaml
+
+secretGenerator:
+  - name: n8n-secret
+    envs:
+      - secrets/n8n.env

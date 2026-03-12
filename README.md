@@ -8,3 +8,8 @@ Test with
   ```bash
 curl localhost
  ```
+
+N8N ist erreichbar unter
+  ```bash
+curl -I localhost/n8n/
+  ```
