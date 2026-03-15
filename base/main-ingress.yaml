@@ -9,16 +9,29 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: "/n8n"
+        path: "/"
         backend:
           service:
             name: n8n-nodeport
             port:
               number: 5678
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: hello-world-nodeport
-            port:
-              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: /helloworld(/|$)(.*)
+            backend:
+              service:
+                name: hello-world-nodeport
+                port:
+                  number: 80
