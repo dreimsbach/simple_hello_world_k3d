@@ -4,8 +4,13 @@ kind: Kustomization
 resources:
   #Base
   - base/main-ingress.yaml
+  - base/affine-ingress.yaml
 
   # Apps
   - apps/hello-world-app/hello-world-app-deployment.yaml
   - apps/hello-world-app/hello-world-app-nodeport.yaml
   - apps/hello-world-app/hello-world-app-pv.yaml
+  - apps/affine-app/affine-app-deployment.yaml
+  - apps/affine-app/affine-app-nodeport.yaml
+  - apps/affine-app/affine-app-backend.yaml
+  - apps/affine-app/affine-app-pv.yaml

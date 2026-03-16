@@ -18,9 +18,9 @@ spec:
             claimName: hello-world-pvc
       containers:
       - name: hello-world-web-server
-        image: nginx:1.21.1
+        image: ghcr.io/nginx/nginx-unprivileged:stable-alpine
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         volumeMounts:
           - mountPath: "/usr/share/nginx/html"
             name: hello-world-volume

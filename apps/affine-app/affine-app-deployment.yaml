@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affine-deployment
+spec:
+  selector:
+    matchLabels:
+      app: affine-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: affine-server
+    spec:
+      initContainers:
+      - name: affine-migration
+        image: ghcr.io/toeverything/affine:stable
+        command: ["sh", "-c", "node ./scripts/self-host-predeploy.js"]
+        env:
+        - name: REDIS_SERVER_HOST
+          value: affine-redis
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: affine-secret
+              key: database-url
+        - name: AFFINE_INDEXER_ENABLED
+          value: "false"
+        volumeMounts:
+          - mountPath: "/root/.affine"
+            name: affine-data-volume
+      volumes:
+        - name: affine-data-volume
+          persistentVolumeClaim:
+            claimName: affine-storage-pvc
+      containers:
+      - name: affine-server
+        image: ghcr.io/toeverything/affine:stable
+        env:
+        - name: REDIS_SERVER_HOST
+          value: affine-redis
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: affine-secret
+              key: database-url
+        - name: AFFINE_INDEXER_ENABLED
+          value: "false"
+        ports:
+        - containerPort: 3010
+        volumeMounts:
+          - mountPath: "/root/.affine"
+            name: affine-data-volume

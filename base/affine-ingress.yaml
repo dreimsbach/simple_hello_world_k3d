@@ -1,17 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: main-ingress
+  name: affine-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
  rules:
   - http:
       paths:
       - pathType: Prefix
-        path: "/hello"
+        path: "/"
         backend:
           service:
-            name: hello-world-nodeport
+            name: affine-nodeport
             port:
               number: 80

@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: affine-secret
+type: Opaque
+stringData:
+  database-url: postgresql://affine:affine@affine-postgres:5432/affine
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affine-postgres
+spec:
+  selector:
+    matchLabels:
+      app: affine-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: affine-postgres
+    spec:
+      volumes:
+        - name: affine-postgres-data
+          persistentVolumeClaim:
+            claimName: affine-postgres-pvc
+      containers:
+      - name: postgres
+        image: pgvector/pgvector:pg16
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: affine
+        - name: POSTGRES_PASSWORD
+          value: affine
+        - name: POSTGRES_DB
+          value: affine
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: trust
+        volumeMounts:
+          - mountPath: "/var/lib/postgresql/data"
+            name: affine-postgres-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: affine-postgres
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: affine-postgres
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affine-redis
+spec:
+  selector:
+    matchLabels:
+      app: affine-redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: affine-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: affine-redis
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: affine-redis
+  type: ClusterIP
