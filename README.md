@@ -1,4 +1,4 @@
-# Simple Hello World with k3d and nginx with local index Files
+# Simple Hello World with k3d and Traefik with local index Files
 Start from GIT Checkout Folder with
  ```bash
  ./bin/create_cluster.sh
