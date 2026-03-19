@@ -4,7 +4,7 @@ metadata:
   name: main-ingress
 spec:
   ingressClassName: traefik
- rules:
+  rules:
   - http:
       paths:
       - pathType: Prefix

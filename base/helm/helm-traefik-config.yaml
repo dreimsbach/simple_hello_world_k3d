@@ -1,0 +1,39 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    logs:
+      general:
+        level: INFO
+      access:
+        enabled: true
+        format: json
+        fields:
+          defaultMode: drop
+          names:
+            StartUTC: keep
+            ClientHost: keep
+            ClientAddr: keep
+            ClientUsername: keep
+            RequestMethod: keep
+            RequestPath: keep
+            RequestProtocol: keep
+            RequestHost: keep
+            RequestContentSize: keep
+            DownstreamStatus: keep
+            DownstreamContentSize: keep
+            Duration: keep
+            OriginDuration: keep
+            TraceId: keep
+            SpanId: keep
+          headers:
+            defaultMode: drop
+            names:
+              X-Forwarded-For: keep
+              X-Real-Ip: keep
+              Referer: keep
+              User-Agent: keep
+              X-Request-Id: keep

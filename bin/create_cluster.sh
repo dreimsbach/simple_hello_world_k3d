@@ -15,6 +15,7 @@ k3d cluster create hello-world-test \
   --port 443:443@loadbalancer  \
   --servers 1  \
   --volume "$localVolumePath:/usr/share/k3dvolume/" \
+  --volume "$(pwd)/base/helm/helm-traefik-config.yaml:/var/lib/rancher/k3s/server/manifests/helm-traefik-config.yaml" \
   --servers-memory=2g
 
 #Kustomize apply
