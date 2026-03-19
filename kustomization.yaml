@@ -9,3 +9,7 @@ resources:
   - apps/hello-world-app/hello-world-app-deployment.yaml
   - apps/hello-world-app/hello-world-app-nodeport.yaml
   - apps/hello-world-app/hello-world-app-pv.yaml
+  - apps/wikijs-app/wikijs-app-deployment.yaml
+  - apps/wikijs-app/wikijs-app-nodeport.yaml
+  - apps/wikijs-app/wikijs-app-backend.yaml
+  - apps/wikijs-app/wikijs-app-pv.yaml

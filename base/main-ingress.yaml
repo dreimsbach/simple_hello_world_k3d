@@ -12,6 +12,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: hello-world-nodeport
+            name: wikijs-nodeport
             port:
               number: 80

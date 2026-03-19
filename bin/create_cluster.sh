@@ -4,6 +4,7 @@ localVolumePath=$(pwd)/../k3dvolume
 
 # Create Folder if not exists
 mkdir -p $localVolumePath/hello-world
+mkdir -p $localVolumePath/wikijs-postgres
 
 # add index html file local
 echo "<html><head></head><body><h1>Local HTML File Hello World<h1></body></html>" > $localVolumePath/hello-world/index.html

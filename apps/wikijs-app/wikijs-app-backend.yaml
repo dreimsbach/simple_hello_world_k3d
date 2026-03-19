@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wikijs-postgres-deployment
+spec:
+  selector:
+    matchLabels:
+      app: wikijs-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: wikijs-postgres
+    spec:
+      volumes:
+        - name: wikijs-postgres-data
+          persistentVolumeClaim:
+            claimName: wikijs-postgres-pvc
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: wiki
+        - name: POSTGRES_USER
+          value: wikijs
+        - name: POSTGRES_PASSWORD
+          value: wikijsrocks
+        volumeMounts:
+          - mountPath: "/var/lib/postgresql/data"
+            name: wikijs-postgres-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wikijs-postgres
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: wikijs-postgres
+  type: ClusterIP
